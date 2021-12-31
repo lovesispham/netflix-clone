@@ -1,10 +1,8 @@
 import React from "react";
 import {useParams} from 'react-router'
 import SearchList from '../components/SearchList'
-import SearchBar from '../components/SearchBar'
 
 function Search(props) {
-   const {results} = props
    const { keyword } = useParams();
    console.log(keyword)
   return (

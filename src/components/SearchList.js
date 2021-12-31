@@ -32,17 +32,34 @@ function SearchList(props) {
       return res;
     };
     fetchData();
-    return movies;
-  }, [keyword]);
+    }, [keyword]);
 
   console.log("render", movies);
+  const handleLoadMore = async () => {
+    const params = {
+      query: keyword,
+      page: page + 1
+    };
+    const res = await tmdbApi.search({ params });
+
+    setTimeout(() => {
+      setMovies([...movies, ...res.results]);
+      setPage(page + 1);
+    }, 500);
+  };
+  
+  const [endPageRef, isIntersecting] = useLazyLoad(handleLoadMore);
+
 
   // render
   var gender_ids = [];
   movies.map((item, index) => {
-    (item.media_type === "movie" ? genres : genrestv).map(
+    
+    (item.media_type === "movie" 
+      ? genres : genrestv).map(
       el => (gender_ids[el.id] = el.name)
     );
+    return gender_ids
   });
   return (
     <div className="movie-grid">
@@ -68,6 +85,12 @@ function SearchList(props) {
           )
         )}
       </div>
+      (<div
+        className={`loadmore_endpage ${isIntersecting ? "intersected" : null}`}
+        ref={endPageRef}
+      >
+        {isIntersecting ? <Spinner /> : null}
+      </div>)
     </div>
   );
 }

@@ -22,7 +22,6 @@ function CreditList(props) {
       return res;
     };
     getCredits();
-    if (props.category === "movie") {
       const getDetail = async () => {
         const res = await tmdbApi.detail(category, item.id);
 
@@ -31,9 +30,9 @@ function CreditList(props) {
         return res;
       };
       getDetail();
-    }
+    
     return {crew,cast};
-  }, [item.id]);
+  }, [item.id,cast,category,crew]);
 
 
   function crewHandle(){
@@ -49,7 +48,9 @@ function CreditList(props) {
   function convertDuration(result) {
     var hours = Math.floor(duration / 60);
     var minutes = duration % 60;
-    return (result = hours + "h" + " " + minutes + "m");
+    var hours_text = 'h'
+    var minutes_text = 'm'
+    return (result = hours + hours_text + minutes + minutes_text);
   }
   
   return (
@@ -96,7 +97,7 @@ function CreditList(props) {
               new Date(item.first_air_date)
             )}
       </div>
-      {props.category === "movie" ? (
+      {category === "movie" ? (
         <div className="cast-item">
           <span className="text">Duration: </span>
 

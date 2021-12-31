@@ -1,5 +1,4 @@
 import React from "react";
-import { useParams } from 'react-router';
 
 import MovieGrid from '../components/MovieGrid'
 import GenresList from "../components/GenresList";
@@ -13,7 +12,6 @@ function Catalog(props) {
     
      const category = splitUrl()
     
-     //const { category } = useParams();
   return (
     
       <div className="section-movie-grid">
