@@ -1,0 +1,68 @@
+// tabs
+.tab-panel {
+    display: none;
+
+    &.current {
+        display: block;
+    }
+
+    
+}
+
+
+
+// Form control
+.form-control {
+    width: 100%;
+    
+    background:rgba(0,0,0,.75);
+    border:1px solid $white;
+    padding: 0 10px;
+    border-radius:5px;
+    height: 34px;
+    @include placeholder(#999,14px);
+    
+    font-size: 14px;
+    
+    
+}
+
+.form-input {
+    position: relative;
+
+}
+// button
+.btn{
+    border-radius: 5px;
+    color: $white;
+    padding: 0 10px;
+    display: inline-block; 
+    text-align:center;
+    font-weight: 500;
+    cursor: pointer;
+    &.bg-org{
+        background: linear-gradient(97.29deg, #F3B05D 1.16%, #F38A5D 81.65%);
+    }
+    &.bg-blue{
+        background: linear-gradient(289.53deg, #3E61B8 7.11%, #65A2EA 100%);
+    }
+    &.bg-theme{
+        background:$theme-color;
+    }
+    &:hover, &:focus{
+        color: $white;
+    }
+}
+.btn-outline{
+    border-radius:5px;
+    padding: 0 10px;
+    display: inline-block; 
+    text-align:center;
+    font-weight: 500;
+    border:1px solid;
+    cursor: pointer;
+    &.br-theme{
+        color: $theme-color;
+        border-color: $theme-color;
+    }
+}

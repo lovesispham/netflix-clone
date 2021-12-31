@@ -1,0 +1,26 @@
+.heading-sm{
+    font-weight: 700;
+    font-size: 16px;
+    position: relative;
+    margin-bottom: 15px;
+    &:before{
+        content:'';
+        @include circle(36px);
+        position: absolute;
+        background: $org;
+        top: -5px;
+        left: -15px;
+        z-index: -1;
+    }
+}
+
+.heading{
+    @media(min-width:$screen-sm){
+        font-size: 33px;
+        margin-bottom: 36px;
+        line-height: 1.4;
+    }
+    font-size: 28px;
+    margin-top: 0;
+    font-weight: 700;
+}
