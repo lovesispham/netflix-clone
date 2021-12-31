@@ -13,7 +13,6 @@ import useLazyLoad from "./useLazyLoad";
 function SearchList(props) {
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
-  const [totalPage, setTotalPage] = useState(0)
   const { keyword } = useParams();
   console.log(keyword);
   //render movies item
@@ -28,7 +27,6 @@ function SearchList(props) {
       };
       const res = await tmdbApi.search({ params });
       setMovies(res.results);
-      setTotalPage(res.total_pages)
       return res;
     };
     fetchData();
