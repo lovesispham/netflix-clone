@@ -50,15 +50,11 @@ function Banner(props) {
 
            
            setMovie(res.results[Math.floor(Math.random() * res.results.length - 1)])
+           return res;
        }
        fetchData()
 
-       //cleanup functin
-       return () => {
-           
-       }
-
-    }, [])
+    }, [category,props.type])
     useEffect(() => {
         document.body.classList.toggle('no-scroll',isShowing)
     }, [isShowing])

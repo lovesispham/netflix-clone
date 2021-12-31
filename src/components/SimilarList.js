@@ -17,7 +17,7 @@ function SimilarList(props) {
             return res
         }
         getSimilarList()
-    }, [item.id])
+    }, [item.id,category])
     
    
     return (

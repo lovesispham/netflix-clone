@@ -15,7 +15,7 @@ function Home(props) {
         </div>
            <div className="section-movie style2">
             <h2 className="heading">Upcoming</h2>
-            <MovieList category={category.movie} category={category.movie} type={movieType.upcoming} />
+            <MovieList category={category.movie} type={movieType.upcoming} />
         </div>
          
         <div className="section-movie style2">

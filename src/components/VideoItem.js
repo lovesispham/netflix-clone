@@ -22,8 +22,8 @@ function VideoItem(props){
         return res;
       };
       setVideoActive();
-    }, [item.id]);
-    console.log(video);
+    }, [item.id, category]);
+    // console.log(video);
     return (
           
               <iframe src={video} title="video" />

@@ -39,8 +39,7 @@ function MovieList(props) {
       return res;
     };
     fetchData();
-    return movies;
-  }, []);
+  }, [props.type]);
 
   console.log("render", movies);
 

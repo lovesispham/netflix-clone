@@ -30,8 +30,7 @@ import "swiper/css/navigation"; // Navigation module
           return res;
         };
         fetchData();
-        return movies;
-      }, []);
+      }, [props.type]);
     
       console.log("render", movies);
       
