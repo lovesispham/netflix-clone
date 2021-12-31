@@ -49,7 +49,6 @@ import useOutsideClick from './useOutsideClick'
                 value={keyword}
                 onChange={handleSearchInput}
                 ref={searchInputRef}
-                autoFocus
                 className={`form-control ${searchToggle && 'active'}`}
             />
             

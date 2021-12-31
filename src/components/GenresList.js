@@ -1,13 +1,17 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import genres from "../assets/data/genres";
 import genrestv from "../assets/data/genrestv";
 import { useHistory } from "react-router";
+import useOutsideClick from './useOutsideClick'
+
 
 function GenresList(props) {
   const category = props.category;
-  console.log(category);
+  
+  const [genresNav, setGenresNav] = useState(false);
+
   const genresMenu = useRef(null);
-  const toggleGenresMenu = () => genresMenu.current.classList.toggle("active");
+
 
   const history = useHistory();
   const handleClickGenre = id => {
@@ -19,12 +23,20 @@ function GenresList(props) {
     history.push(genreUrl);
   };
 
+  useOutsideClick(genresMenu, ()=>{
+    if(genresNav)
+    setGenresNav(false)
+  })
+
   return (
+    
     <div className="genres-list" ref={genresMenu}>
-      <span onClick={toggleGenresMenu} className="text">
+      <span onClick={()=> setGenresNav(!genresNav)} className="text">
         Genres
       </span>
-      <div className="drp-menu">
+      {
+        genresNav && (
+          <div className="drp-menu" ref={genresMenu}>
         {category === "movie"
           ? genres.map((genre, index) => (
               <span
@@ -45,6 +57,8 @@ function GenresList(props) {
               </span>
             ))}
       </div>
+        )
+      }
     </div>
   );
 }

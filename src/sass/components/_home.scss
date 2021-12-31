@@ -1,6 +1,9 @@
 body{
   background: #141414;
 }
+.movieapp{
+  position: relative;
+}
 .heading{
     color: #e5e5e5;
     font-weight: 500;
@@ -284,7 +287,13 @@ body{
   .banner-content{
     @include centeralways;
     top:40%;
-    padding: 0 40px;
+    @media(min-width:$screen-sm){
+      padding: 0 20px;
+    }
+    @media(min-width:1200px){
+      padding:0 40px;
+    }
+    padding:0 10px;
     color: $white;
     max-width: 500px;
     .title{
@@ -319,7 +328,7 @@ body{
 .movie-listing{
   margin-top: -190px;
   position: relative;
-  z-index:20;
+  z-index:10;
   
 }
 .section-movie-slider{
@@ -355,11 +364,7 @@ body{
     width: 100px;
     position: relative;
     margin-left: 50px;
-    &.active{
-      .drp-menu{
-        display: block;
-      }
-    }
+    
     .drp-menu{
       width: 440px;
       position: absolute;
@@ -367,14 +372,33 @@ body{
       left:0;
       background: rgba(0,0,0,0.9);
       border:solid 1px rgba(255, 255, 255, 0.15);
-      display: none;
       z-index:20;
+      @media(max-width:$screen-xs-max){
+        position: fixed;
+        display: block;
+        margin: 0;
+        list-style: none;
+        
+        top: 52px;
+        left: 0;
+        
+        height: 100%;
+        width: 250px;
+        text-align: left;
+        overflow-x: scroll;
+        
+        transition: all .3s cubic-bezier(0.7, 0, 0.3, 1) 0s;
+        z-index:20 ;
+        
+      }
       .genre-item{
         color:$white;
         display: block;
         padding: 5px 10px;
-        float:left;
+        @media(min-width:$screen-sm){
+          float:left;
         width: calc(100% /3);
+        }
         cursor: pointer;
       }
     }
@@ -388,12 +412,30 @@ body{
       border:1px solid $white;
       position: relative;
       cursor: pointer;
+      @media(max-width:$screen-xs-max){
+        font-size: 0;
+        padding: 0;
+        width: 36px;
+        height: 36px;
+        line-height: 36px;
+        background: #000;
+        position: fixed;
+        z-index: 99;
+        top: 40%;
+        right:0;
+      }
       &:before{
         content:"\f078";
         font-family:'FontAwesome';
         @include centeralways;
         right:5px;
         font-size: 12px;
+        @media(max-width:$screen-xs-max){
+          content:'\f008';
+          font-size: 16px;
+          @include center;
+          
+        }
       }
     }
   }

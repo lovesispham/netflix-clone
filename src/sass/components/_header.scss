@@ -1,87 +1,142 @@
-.header{
-    background: rgb(20, 20, 20);
-    z-index:20;
+.header {
+  background: rgb(20, 20, 20);
+  z-index: 99;
+  position: absolute;
+  top: 0;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+  @media (min-width: $screen-sm) {
+    padding: 0 20px;
+  }
+  @media (min-width: 1200px) {
+    padding: 0 40px;
+  }
+  padding: 0 10px;
+  .logo {
+    width: 93px;
+  }
+  .navbar-nav {
+    margin-left: 18px;
+  }
+  .navbar-search {
+    margin-left: auto;
+  }
+  .icon-pushmenu {
+    cursor: pointer;
+    display: none;
+    margin-right: auto;
+    &.navbar-toggle {
+      .navbar-toggler-bar {
+        width: 25px;
+        height: 3px;
+        background: $white;
+        display: block;
+
+        &:not(:last-child) {
+          margin-bottom: 4px;
+        }
+      }
+    }
+    @media (max-width: $screen-xs-max) {
+      width: 52px;
+      height: 52px;
+      line-height: 52px;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+  }
+}
+.navbar-nav {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+  @media (max-width: $screen-xs-max) {
     position: absolute;
-    top:0;
-    width: 100%;
-    
-        display: flex;
-        align-items:center;
-        @media(min-width:$screen-sm){
-            padding: 0 20px;
-          }
-          @media(min-width:1200px){
-            padding:0 40px;
-          }
-          padding:0 10px;
-        .logo{
-            width: 93px;
-        }
-        .navbar-nav{
-            margin-left: 18px;
-        }
-        .navbar-search{
-            margin-left: auto;
-        }
-    
-}
-.navbar-nav{
-    padding: 0;
-    margin: 0;
-    list-style:none;
-    li{
-        display: inline-block;
-       
-        margin: 0 5px 0 5px;
-        a{
-            color: $white;
-            
-            text-transform: capitalize;
-            
-            padding: 16px 5px 15px 5px;
-            display: block;
-            
-        }
-        &.active{
-            a{
-                color: $white !important;
-                font-weight: bold;
-            }
-        }
-        
-            a{
-                &:hover{
-                    color: #b3b3b3;
-                }
-            }
-        
+    width: 250px;
+    transform: translateX(-100%);
+    top: 52px;
+    background: #000;
+    height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    z-index: 99;
+    left: -20px;
+    @include transition2;
+    &.active{
+        transform: translateX(0);
     }
+  }
+  li {
+    @media (min-width: $screen-sm) {
+      display: inline-block;
+
+      margin: 0 5px 0 5px;
+    }
+    a {
+      color: grey;
+      position: relative;
+      text-transform: capitalize;
+      @media (min-width: $screen-sm) {
+        padding: 16px 5px 15px 5px;
+      }
+      padding: 10px 17px;
+      display: block;
+      @media (max-width: $screen-xs-max) {
+        font-size: 16px;
+      }
+    }
+    &.active {
+      a {
+        color: $white !important;
+        font-weight: bold;
+        @media (max-width: $screen-xs-max) {
+          border-left: 3px solid #b9090b;
+        }
+      }
+    }
+
+    a {
+      &:hover {
+        color: #b3b3b3;
+      }
+    }
+  }
 }
-.navbar-search{
-    color: $white;
-    font-size: 16px;
+.navbar-search {
+  color: $white;
+  font-size: 16px;
+  position: relative;
+  width: 52px;
+  margin-right: -10px;
+  .btn {
+    width: 52px;
+    height: 52px;
+    line-height: 52px;
+    display: inline-block;
+    text-align: center;
     position: relative;
-    .btn{
-        width: 52px;
-        height: 52px;
-        line-height: 52px;
-        display: inline-block;
-        text-align:center;
+    z-index:10;
+    @media (max-width: $screen-xs-max) {
+      margin-right: -10px;
     }
-   
-    .search-bar{
-        
-        .form-control{
-            @include centeralways;
-            right:0;
-            opacity:0;
-            width: 0;
-            @include transition2;
-            &.active{
-                opacity:1;
-                width: 270px;
-            }
-        }
-        
+  }
+
+  .search-bar {
+    .form-control {
+    @include centeralways;
+      right: 10px;
+      opacity: 0;
+      width: 0;
+      @include transition2;
+      z-index: 5;
+      &.active {
+        opacity: 1;
+        width: 270px;
+      }
     }
+  }
 }

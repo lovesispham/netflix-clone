@@ -31,8 +31,8 @@ function CreditList(props) {
       };
       getDetail();
     
-    return {crew,cast};
-  }, [item.id,cast,category,crew]);
+    
+  }, [item.id,category]);
 
 
   function crewHandle(){
@@ -101,7 +101,7 @@ function CreditList(props) {
         <div className="cast-item">
           <span className="text">Duration: </span>
 
-          {convertDuration()}
+          { duration? convertDuration() : null}
         </div>
       ) : null}
     </div>

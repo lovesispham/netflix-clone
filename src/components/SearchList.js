@@ -13,7 +13,7 @@ import useLazyLoad from "./useLazyLoad";
 function SearchList(props) {
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
-
+  const [totalPage, setTotalPage] = useState(0)
   const { keyword } = useParams();
   console.log(keyword);
   //render movies item
@@ -28,7 +28,7 @@ function SearchList(props) {
       };
       const res = await tmdbApi.search({ params });
       setMovies(res.results);
-
+      setTotalPage(res.total_pages)
       return res;
     };
     fetchData();
@@ -44,12 +44,13 @@ function SearchList(props) {
 
     setTimeout(() => {
       setMovies([...movies, ...res.results]);
-      setPage(page + 1);
+      
+      setPage(page => page + 1);
     }, 500);
   };
   
   const [endPageRef, isIntersecting] = useLazyLoad(handleLoadMore);
-
+  console.log(endPageRef)
 
   // render
   var gender_ids = [];
@@ -62,6 +63,7 @@ function SearchList(props) {
     return gender_ids
   });
   return (
+    movies ? (
     <div className="movie-grid">
       {/* render movies */}
       <div className="grid-list">
@@ -85,13 +87,24 @@ function SearchList(props) {
           )
         )}
       </div>
-      (<div
-        className={`loadmore_endpage ${isIntersecting ? "intersected" : null}`}
-        ref={endPageRef}
+      
+       
+          
+       
+      <div  className={`loadmore_endpage ${isIntersecting ? "is loading" : null}`}
+            ref={endPageRef}
       >
         {isIntersecting ? <Spinner /> : null}
-      </div>)
+      </div>
+          
+         
+         
+        
+
+      
+      
     </div>
+    ):<p>page not found</p>
   );
 }
 

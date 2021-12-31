@@ -17,7 +17,7 @@ function Banner(props) {
     } else
     genrestv.map(el => (gender_ids[el.id] = el.name));
 
-    const matchTitle = movie.original_title || movie.title || movie.name || movie.original_name
+    const matchTitle = movie?.original_title || movie?.title || movie?.name || movie?.original_name
 
     //   Modal
         const [selected, setSelected] = useState([])
@@ -61,7 +61,7 @@ function Banner(props) {
     
     console.log(movie)
     return (
-        <div className="section-banner" style={{backgroundImage:`url(${baseImgUrl}${movie.backdrop_path ? movie.backdrop_path : movie.poster_path})`}}>
+        <div className="section-banner" style={{backgroundImage:`url(${baseImgUrl}${movie?.backdrop_path ? movie?.backdrop_path : movie?.poster_path})`}}>
             <div className="banner-content">
                 {/* original_title, title : movie ;original_name, name: tvseries  */}
                 <h3 className="title">{matchTitle}</h3>

@@ -37,7 +37,6 @@ function MovieGrid(props) {
       };
       const res = await tmdbApi.getByGenre(category, { params });
       setMovies(res.results);
-      
       return res;
     };
     fetchData();
@@ -54,7 +53,7 @@ function MovieGrid(props) {
 
     setTimeout(() => {
       setMovies([...movies, ...res.results]);
-      setPage(page + 1);
+      setPage(page => page + 1);
     }, 500);
   };
   
@@ -66,7 +65,7 @@ function MovieGrid(props) {
       {/* render movies */}
       <div className="grid-list">
         {category === "movie"
-          ? movies.map((item, index) => (
+          ? (movies.map((item, index) => (
               <div className="slider-item" key={index}>
                 <MovieItem
                   item={item}
@@ -74,8 +73,8 @@ function MovieGrid(props) {
                   category={category}
                 />
               </div>
-            ))
-          : movies.map((item, index) => (
+            )))
+          : (movies.map((item, index) => (
               <div className="slider-item" key={index}>
                 <TvItem
                   item={item}
@@ -83,16 +82,19 @@ function MovieGrid(props) {
                   category={category}
                 />
               </div>
-            ))}
+            )))}
        
       </div>
-      
-      (<div
-        className={`loadmore_endpage ${isIntersecting ? "intersected" : null}`}
+      (
+        <div className={`loadmore_endpage ${isIntersecting ? "intersected" : null}`}
         ref={endPageRef}
       >
         {isIntersecting ? <Spinner /> : null}
-      </div>)
+      )
+         
+              
+      </div>
+           
       
     </div>
   );
