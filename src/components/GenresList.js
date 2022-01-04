@@ -27,7 +27,6 @@ function GenresList(props) {
     if(genresNav)
     setGenresNav(false)
   })
-
   return (
     
     <div className="genres-list" ref={genresMenu}>

@@ -13,7 +13,7 @@ import useLazyLoad from "./useLazyLoad";
 function MovieGrid(props) {
   const [movies, setMovies] = useState([]);
   const [page, setPage] = useState(1);
-
+  const [totalPage, setTotalPage] = useState(0)
   const history = useHistory();
   const { genreIdUrl } = useParams();
   
@@ -37,6 +37,7 @@ function MovieGrid(props) {
       };
       const res = await tmdbApi.getByGenre(category, { params });
       setMovies(res.results);
+      setTotalPage(res.total_pages)
       return res;
     };
     fetchData();
@@ -53,7 +54,7 @@ function MovieGrid(props) {
 
     setTimeout(() => {
       setMovies([...movies, ...res.results]);
-      setPage(page => page + 1);
+      setPage(page + 1 );
     }, 500);
   };
   
@@ -85,12 +86,12 @@ function MovieGrid(props) {
             )))}
        
       </div>
-      (
+      
         <div className={`loadmore_endpage ${isIntersecting ? "intersected" : null}`}
         ref={endPageRef}
       >
-        {isIntersecting ? <Spinner /> : null}
-      )
+        {isIntersecting && (page <= totalPage) ? <Spinner /> : null}
+      
          
               
       </div>

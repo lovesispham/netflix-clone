@@ -9,7 +9,8 @@ function CreditList(props) {
   const item = props.item;
   const category = props.category;
   const gender_ids = props.gender_ids;
-
+  //movie:release_date || tv show: first_air_date
+  const mathDate = item.release_date || item.first_air_date || null
   
   
 
@@ -72,7 +73,7 @@ function CreditList(props) {
                 newCrewList.map((item, index)=>(
                   <div className="cast-item" key={index}>
                   <span className="text">{item.department}: </span>
-                  <span>{(index[index+1] ? " , " : " ") + item.name}</span>
+                  <span>{(index[index+1] ? " , " : " ") + item.name.slice(0,15)}</span>
                   </div>
                 ))
               }
@@ -89,19 +90,17 @@ function CreditList(props) {
       </div>
       <div className="cast-item">
         <span className="text">Release Date: </span>
-        {/* movie:release_date || tv show: first_air_date  */}
 
-        {props.category === "movie"
-          ? new Intl.DateTimeFormat("en-GB").format(new Date(item.release_date))
-          : new Intl.DateTimeFormat("en-GB").format(
-              new Date(item.first_air_date)
-            )}
+        {
+          new Intl.DateTimeFormat("en-GB").format(new Date(mathDate))
+        }
+            
       </div>
       {category === "movie" ? (
         <div className="cast-item">
           <span className="text">Duration: </span>
 
-          { duration? convertDuration() : null}
+          { duration ? convertDuration() : 'Not Available'}
         </div>
       ) : null}
     </div>

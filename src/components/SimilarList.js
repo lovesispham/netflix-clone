@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import tmdbApi from '../api/tmdbApi'
+import PlayVideo from "./PlayVideo";
 import {dateToYearOnly} from '../untils/untils'
 const baseImgUrl = `https://image.tmdb.org/t/p/w500/`;
 function SimilarList(props) {
@@ -10,6 +11,22 @@ function SimilarList(props) {
 
     const item = props.item
     const category = props.category
+
+      // Video frame
+  const [selectedVideo, setSelectedVideo] = useState([])
+  const [isShowingVideo, setIsShowingVideo] = useState(false)
+
+  const handlePlayVideo = id => {
+  setSelectedVideo(id)
+  setIsShowingVideo(true)
+  
+}
+const handleCloseVideo = () => {
+    setIsShowingVideo(false)
+    setSelectedVideo([]);
+}
+
+
     useEffect(() => {
         const getSimilarList = async() => {
             const res = await tmdbApi.similar(category,item.id)
@@ -19,17 +36,30 @@ function SimilarList(props) {
         getSimilarList()
     }, [item.id,category])
     
-   
+    
     return (
         <div className="similar-listing">
             <h2 className="heading">More Like This</h2>
+            {
+          isShowingVideo ? (
+    <PlayVideo 
+            close = {handleCloseVideo}
+            show={isShowingVideo}
+            item={selectedVideo} 
+            category={category}/>
+          ):null
+          }
             <div className="row">
                 {
                     movie.slice(0,numberofItem).map((item,index)=> (
                         <div className="col-xs-4" key={index}>
                             <div className="item">
+                            
                                 <div className="photo">
                                    <img src={`${baseImgUrl}${item.poster_path || item.backdrop_path}`} alt={item.title}/>
+                                   <div className="circle-icon" onClick={()=> handlePlayVideo(item)}>
+                <span className="fa fa-play"></span>
+                  </div>
                                 </div>
                                 <div className="info">
                                 <div className="top-info">

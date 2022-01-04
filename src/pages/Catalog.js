@@ -1,16 +1,14 @@
 import React from "react";
-
 import MovieGrid from '../components/MovieGrid'
 import GenresList from "../components/GenresList";
 import { category as cate } from "../api/tmdbApi";
 
-function Catalog(props) {
-     const splitUrl = () => {
-         const newUrl = props.location.pathname.split('/').slice(1,-1)
-         return newUrl[0]
-     }
-    
-     const category = splitUrl()
+function Catalog({match}) {
+   
+    const {url} = match
+    const sliceUrl = url.split("/")
+    const category = sliceUrl[1]
+
     
   return (
     

@@ -1,6 +1,6 @@
 import React from 'react'
 
-import {Route,Switch} from 'react-router-dom'
+import {Route,Switch, Redirect,useLocation} from 'react-router-dom'
 
 import Home from '../pages/Home'
 import Catalog from '../pages/Catalog'
@@ -8,8 +8,9 @@ import Movies from '../pages/Movies'
 import TVSeries from '../pages/TVSeries'
 import Search from '../pages/Search'
 const Routes = () => {
+    const location = useLocation()
     return (
-        <Switch >
+        <Switch location={location} key={location.pathname}>
             <Route 
                 path='/'
                 exact
@@ -24,12 +25,12 @@ const Routes = () => {
             <Route 
                 path='/movie/:genreIdUrl'
                 exact
-                component={Catalog}
+                render = {(props)=> <Catalog {...props} />}
             />
             <Route 
                 path='/tv/:genreIdUrl'
                 exact
-                component={Catalog}
+                render = {(props)=> <Catalog {...props} />}
             />
             <Route 
                 path='/tv'
@@ -41,6 +42,9 @@ const Routes = () => {
                 exact
                 component={Search}
             />
+            <Route path="*">
+                <Redirect to="/" />
+            </Route>
         </Switch>
     )
 }

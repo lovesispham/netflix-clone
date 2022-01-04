@@ -8,10 +8,11 @@ function Modal(props) {
   const { isShowing, close, movie, gender_ids, title } = props;
   const category = props.category
   
-
   return isShowing
+  
     ? ReactDOM.createPortal(
         <React.Fragment>
+          <div className="modal-overlay"></div>
           <div
             id={`modal_${movie.id}`}
             className={`modal-popup_style2 ${
@@ -26,6 +27,7 @@ function Modal(props) {
                 <i className="fa fa-close"></i>
               </span>
               <div className="pu-content">
+                
                 <VideoItem item={movie} category={category}/>
                 <div className="content scroll_pu_content">
                   <h2 className="heading">{title}</h2>
@@ -46,7 +48,7 @@ function Modal(props) {
             </div>
           </div>
         </React.Fragment>,
-        document.body
+        document.querySelector('.movieapp'),
       )
     : null;
 }

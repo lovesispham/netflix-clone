@@ -1,5 +1,7 @@
-import React,{ useState, useEffect } from "react";
+import React,{ useState,useRef } from "react";
 import Modal from "./Modal";
+import PlayVideo from "./PlayVideo";
+import useOutsideClick from './useOutsideClick'
 
 const baseImgUrl = `https://image.tmdb.org/t/p/w500/`;
 
@@ -9,6 +11,20 @@ function MovieItem(props) {
   const category = props.category
   const {gender_ids} = props
   const matchTitle = item.original_title || item.title
+  const modalRef = useRef()
+
+  // Video frame
+  const [selectedVideo, setSelectedVideo] = useState([])
+  const [isShowingVideo, setIsShowingVideo] = useState(false)
+
+  const handlePlayVideo = id => {
+  setSelectedVideo(id)
+  setIsShowingVideo(true)
+}
+const handleCloseVideo = () => {
+    setIsShowingVideo(false)
+    setSelectedVideo([]);
+}
   //   Modal
   const [selected, setSelected] = useState([]);
   const [isShowing, setisShowing] = useState(false);
@@ -22,13 +38,21 @@ function MovieItem(props) {
     setisShowing(false);
     setSelected([]);
   };
-
-  useEffect(() => {
-    document.body.classList.toggle("no-scroll", isShowing);
-  }, [isShowing]);
+  useOutsideClick(modalRef,()=>{
+    if(isShowing) setisShowing(false)
+  })
 
   return (
     <div className="item">
+     {
+          isShowingVideo ? (
+    <PlayVideo 
+            close = {handleCloseVideo}
+            show={isShowingVideo}
+            item={selectedVideo} 
+            category={category}/>
+          ):null
+          }
     <Modal 
         isShowing={isShowing} 
         close={handleClose} 
@@ -36,18 +60,24 @@ function MovieItem(props) {
         category={category} 
         gender_ids={gender_ids} 
         title ={matchTitle}
-
+        
         />
       <div className="photo">
               <img
                 src={`${baseImgUrl}${item.backdrop_path || item.poster_path}`}
                 alt={item.title}
               />
-                
+              <div className="circle-icon" onClick={()=> handlePlayVideo(item)}>
+                <span className="fa fa-play"></span>
+                  </div>
+            </div>
+            <div className="info-mb">
+              <h3 className="title">{matchTitle}</h3>
             </div>
             <div className="info">
+                
                 <div className="icon-group">
-                  <div className="circle-icon">
+                  <div className="circle-icon" onClick={()=> handlePlayVideo(item)}>
                     <span className="fa fa-play"></span>
                   </div>
                   <div className="circle-icon">
