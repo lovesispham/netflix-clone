@@ -9,6 +9,9 @@ function PlayVideo(props){
     const {show, close} = props
     const item = props.item;
     const category = props.category
+    const baselink = 'GV3HUDMQ-F8'
+    const linkUrl = "https://www.youtube.com/embed/"
+    const lastUrl = "?rel=0&autoplay=1&mute=1"
     useEffect(() => {
       const setVideoActive = async () => {
         const res = await tmdbApi.getVideos(category,item.id);
@@ -16,15 +19,16 @@ function PlayVideo(props){
   
         const videSrc =
           "https://www.youtube.com/embed/" +
-          res.results[0].key + 
-          "?rel=0&autoplay=1&mute=1";
-  
+          res.results[0].key
+          + "?rel=0&autoplay=1&mute=1";
+       
+
         setVideo(videSrc);
         return res;
       };
       setVideoActive();
     }, [item.id, category]);
-    // console.log(video);
+     console.log(video);
 
     return show 
     ? ReactDOM.createPortal(

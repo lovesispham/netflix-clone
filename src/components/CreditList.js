@@ -84,7 +84,7 @@ function CreditList(props) {
       <div className="cast-item genres-list">
         <span className="text">Genres: </span>
 
-        {item.genre_ids.map((id, index) => (
+        {item.genre_ids?.map((id, index) => (
           <span key={index}>{(index ? ", " : "") + gender_ids[id]}</span>
         ))}
       </div>

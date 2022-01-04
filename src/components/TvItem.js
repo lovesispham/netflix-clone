@@ -1,8 +1,9 @@
 import React,{ useState, useRef } from "react";
 import Modal from "./Modal";
 import PlayVideo from "./PlayVideo";
-import useOutsideClick from './useOutsideClick'
+import useOutsideClick from './useOutsideClick';
 
+import blank from '../assets/blank.jpg';
 const baseImgUrl = `https://image.tmdb.org/t/p/w500/`;
 
 
@@ -11,6 +12,7 @@ function TvItem(props) {
   const category = props.category
   const {gender_ids} = props
   const matchTitle = item.name || item.original_name
+  const backdropImage = item.backdrop_path
   const modalRef = useRef()
 
     // Video frame
@@ -67,7 +69,8 @@ function TvItem(props) {
         />
       <div className="photo">
               <img
-                src={`${baseImgUrl}${item.backdrop_path || item.poster_path}`}
+
+                src={backdropImage? `${baseImgUrl}${item.backdrop_path || item.poster_path}`: blank}
                 alt={item.title}
               />
                 <div className="circle-icon" onClick={()=> handlePlayVideo(item)}>
@@ -82,13 +85,8 @@ function TvItem(props) {
                   <div className="circle-icon" onClick={()=> handlePlayVideo(item)}>
                     <span className="fa fa-play"></span>
                   </div>
-                  <div className="circle-icon">
-                    <span className="fa fa-thumbs-up"></span>
-                  </div>
-                  <div className="circle-icon">
-                    <span className="fa fa-thumbs-down"></span>
-                  </div>
-                  <div className="circle-icon last" onClick={()=>handleOpen(item)}>
+                 
+                  <div className="circle-icon" onClick={()=>handleOpen(item)}>
                     <span className="fa fa-angle-down"></span>
                   </div>
                 </div>
