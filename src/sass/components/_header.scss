@@ -1,12 +1,16 @@
 .header {
   background: rgb(20, 20, 20);
   z-index: 99;
-  position: absolute;
-  top: 0;
+  
   width: 100%;
 
   display: flex;
   align-items: center;
+  &.header-fixed{
+    position: fixed;
+    top:0;
+    left:0;
+  }
   @media (min-width: $screen-sm) {
     padding: 0 20px;
   }
@@ -18,7 +22,9 @@
     width: 93px;
   }
   .navbar-nav {
-    margin-left: 18px;
+    @media(min-width:$screen-sm){
+      margin-left: 18px;
+    }
   }
   .navbar-search {
     margin-left: auto;
@@ -64,7 +70,7 @@
     overflow-y: auto;
     overflow-x: hidden;
     z-index: 99;
-    left: -20px;
+    left: 0;
     @include transition2;
     &.active{
         transform: translateX(0);

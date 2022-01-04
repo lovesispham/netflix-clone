@@ -1,9 +1,10 @@
-import React,{useRef} from "react";
+import React,{useRef, useState} from "react";
 import logo from "../assets/logo.png";
 import SearchBar from "./SearchBar";
 import {Link, useLocation} from 'react-router-dom'
 import { useParams } from 'react-router';
-
+import useScroll from './useScroll'
+import useOutsideClick from './useOutsideClick'
 const mainMenu = [
   {
     display: "Home",
@@ -25,11 +26,19 @@ function Header(props) {
     const {pathname} = useLocation()
     const activeNav = mainMenu.findIndex(e => e.path === pathname)
 
+    const [menuOpen, setMenuOpen] = useState(false);
+
     const menuLeft = useRef(null)
-    const menuToggle = () => menuLeft.current.classList.toggle('active')
+    
+    const isScrolled = useScroll(70);
+
+    useOutsideClick(menuLeft, ()=>{
+      if(menuOpen)
+      setMenuOpen(false)
+    })
   return (
-    <div className="header">
-        <span className="icon-pushmenu navbar-toggle" onClick={menuToggle}>
+    <div className={`header ${isScrolled ? 'header-fixed':''}`} ref={menuLeft}>
+        <span className="icon-pushmenu navbar-toggle" onClick={()=> setMenuOpen(!menuOpen)}>
           <span className="navbar-toggler-bar"></span>
           <span className="navbar-toggler-bar"></span>
           <span className="navbar-toggler-bar"></span>
@@ -37,7 +46,7 @@ function Header(props) {
         <a href="/" className="logo">
           <img src={logo} alt="" />
         </a>
-        <ul className="navbar-nav" ref={menuLeft}>
+        <ul className={`navbar-nav ${menuOpen ? 'active':''}` } ref={menuLeft}>
             {
                 mainMenu.map((item,index) => (
                     <li

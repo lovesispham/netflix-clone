@@ -378,6 +378,9 @@ body{
         }
         &.btn-info{
           background: rgba(109,109,110,0.7);
+          @media(max-width:$screen-xs-max){
+            display: none;
+          }
         }
       }
     }
@@ -409,7 +412,6 @@ body{
     padding:0 40px;
   }
   padding:0 10px;
-  display: none;
   }
 }
 .top-heading{
