@@ -9,9 +9,7 @@ function PlayVideo(props){
     const {show, close} = props
     const item = props.item;
     const category = props.category
-    const baselink = 'GV3HUDMQ-F8'
-    const linkUrl = "https://www.youtube.com/embed/"
-    const lastUrl = "?rel=0&autoplay=1&mute=1"
+   
     useEffect(() => {
       const setVideoActive = async () => {
         const res = await tmdbApi.getVideos(category,item.id);
