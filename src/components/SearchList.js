@@ -15,7 +15,6 @@ function SearchList(props) {
   const [page, setPage] = useState(1);
   const [totalPage, setTotalPage] = useState(0)
   const { keyword } = useParams();
-  console.log(keyword);
   //render movies item
   useEffect(() => {
     //if [] chay 1 lan, hok chay lai
@@ -34,7 +33,6 @@ function SearchList(props) {
     fetchData();
     }, [keyword]);
 
-  console.log("render", movies);
   const handleLoadMore = async () => {
     const params = {
       query: keyword,
@@ -52,7 +50,6 @@ function SearchList(props) {
   
     const [endPageRef, isIntersecting] = useLazyLoad(handleLoadMore);
   
-  console.log(endPageRef)
  
   // render
   var gender_ids = [];

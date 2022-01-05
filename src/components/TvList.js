@@ -32,7 +32,6 @@ import "swiper/css/navigation"; // Navigation module
         fetchData();
       }, [props.type]);
     
-      console.log("render", movies);
       
     //   genres
       var gender_ids = [];

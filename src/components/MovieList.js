@@ -41,7 +41,6 @@ function MovieList(props) {
     fetchData();
   }, [props.type]);
 
-  console.log("render", movies);
 
   return (
     <div className="movie-slider">

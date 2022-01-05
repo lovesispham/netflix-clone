@@ -356,6 +356,9 @@ body{
     max-width: 500px;
     .title{
       font-size: 30px;
+      line-height: 36px;
+      max-height: 72px;
+      @include text-clamp(2);
       margin: 0;
     }
     .desc{

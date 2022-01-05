@@ -13,7 +13,6 @@ function PlayVideo(props){
     useEffect(() => {
       const setVideoActive = async () => {
         const res = await tmdbApi.getVideos(category,item.id);
-        // console.log(videos.results)
   
         const videSrc =
           "https://www.youtube.com/embed/" +
@@ -26,7 +25,6 @@ function PlayVideo(props){
       };
       setVideoActive();
     }, [item.id, category]);
-     console.log(video);
 
     return show 
     ? ReactDOM.createPortal(

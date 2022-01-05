@@ -4,7 +4,6 @@ import SearchList from '../components/SearchList'
 
 function Search(props) {
    const { keyword } = useParams();
-   console.log(keyword)
   return (
     
       <div className="section-movie-grid">
