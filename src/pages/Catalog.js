@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"
 import React from "react";
 import MovieGrid from '../components/MovieGrid'
 import GenresList from "../components/GenresList";
@@ -27,5 +28,6 @@ function Catalog({match}) {
     
   );
 }
+
 
 export default Catalog;

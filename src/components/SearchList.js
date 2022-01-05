@@ -62,7 +62,7 @@ function SearchList(props) {
     return gender_ids
   });
   return (
-    movies ? (
+    movies && movies.length > 0 ? (
     <div className="movie-grid">
       {/* render movies */}
       <div className="grid-list">
@@ -103,7 +103,7 @@ function SearchList(props) {
       
       
     </div>
-    ):<p>page not found</p>
+    ):<h2 className="heading">OOPs! Sorry, not found. Please search movies and tv shows again.</h2>
   );
 }
 

@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"
 import React, {useState, useEffect} from 'react'
 import tmdbApi from '../api/tmdbApi'
 import PlayVideo from "./PlayVideo";
@@ -89,6 +90,20 @@ const handleCloseVideo = () => {
             </span>
         </div>
     )
+}
+
+SimilarList.propTypes = {
+  category: PropTypes.string.isRequired,
+  item: PropTypes.shape({
+    backdrop_path: PropTypes.string,
+    first_air_date: PropTypes.string,
+    id: PropTypes.number,
+    overview: PropTypes.string,
+    poster_path: PropTypes.string,
+    release_date: PropTypes.string,
+    title: PropTypes.string,
+    vote_average: PropTypes.number
+  })
 }
 
 export default SimilarList

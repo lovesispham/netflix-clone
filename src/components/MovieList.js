@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"
 import React, { useState, useEffect } from "react";
 
 // import Swiper core and required modules
@@ -68,6 +69,11 @@ function MovieList(props) {
       
     </div>
   );
+}
+
+MovieList.propTypes = {
+  category: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired
 }
 
 export default MovieList;

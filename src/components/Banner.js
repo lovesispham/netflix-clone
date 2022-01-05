@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"
 import React, { useState, useEffect } from "react";
 import tmdbApi from "../api/tmdbApi";
 import { truncate } from "../untils/untils";
@@ -127,6 +128,18 @@ function Banner(props) {
       }}
     ></div>
   );
+}
+
+Banner.propTypes = {
+  category: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  matchTitle:PropTypes.string,
+  handlePlayVideo: PropTypes.func,
+  handleCloseVideo:PropTypes.func,
+  handleOpen:PropTypes.func,
+  handleClose:PropTypes.func
+
+
 }
 
 export default Banner;

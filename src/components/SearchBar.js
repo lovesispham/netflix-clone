@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"
 import {useState,useRef} from 'react'
 import {useHistory} from 'react-router-dom'
 import useOutsideClick from './useOutsideClick'
@@ -60,5 +61,9 @@ import useOutsideClick from './useOutsideClick'
             <div onClick={clearSearchToggle}></div>
         </div>
     )
+}
+
+SearchBar.propTypes = {
+  keyword: PropTypes.string
 }
 export default SearchBar

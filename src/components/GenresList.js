@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"
 import React, { useRef, useState } from "react";
 import genres from "../assets/data/genres";
 import genrestv from "../assets/data/genrestv";
@@ -60,5 +61,10 @@ function GenresList(props) {
       }
     </div>
   );
+}
+
+GenresList.propTypes = {
+  category: PropTypes.string.isRequired
+
 }
 export default GenresList;

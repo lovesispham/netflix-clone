@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"
 import React from "react";
 import ReactDOM from "react-dom";
 import VideoItem from "./VideoItem";
@@ -51,5 +52,13 @@ function Modal(props) {
         document.querySelector('.movieapp'),
       )
     : null;
+}
+
+Modal.propTypes = {
+  category: PropTypes.string.isRequired,
+  close: PropTypes.func,
+  isShowing: PropTypes.bool,
+  
+  title: PropTypes.string
 }
 export default Modal;

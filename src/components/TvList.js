@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"
 import React, { useState, useEffect } from "react";
 
 // import Swiper core and required modules
@@ -66,5 +67,10 @@ import "swiper/css/navigation"; // Navigation module
       
     </div>
     )
+}
+
+TvList.propTypes = {
+  category: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired
 }
 export default TvList

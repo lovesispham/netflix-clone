@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"
 import React,{useState, useEffect} from "react";
 import tmdbApi from "../api/tmdbApi";
 
@@ -31,4 +32,12 @@ function VideoItem(props){
       
     );
     }
+
+VideoItem.propTypes = {
+  category: PropTypes.string.isRequired,
+  item: PropTypes.shape({
+    id: PropTypes.number
+    
+  })
+}
 export default VideoItem;

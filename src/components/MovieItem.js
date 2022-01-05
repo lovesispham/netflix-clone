@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"
 import React,{ useState,useRef } from "react";
 import Modal from "./Modal";
 import PlayVideo from "./PlayVideo";
@@ -110,6 +111,22 @@ const handleCloseVideo = () => {
            
               
   );
+}
+
+MovieItem.propTypes = {
+  handlePlayVideo:PropTypes.func,
+  handleCloseVideo:PropTypes.func,
+  handleOpen:PropTypes.func,
+  handleClose:PropTypes.func,
+  category: PropTypes.string.isRequired,
+  item: PropTypes.shape({
+    backdrop_path: PropTypes.string,
+    original_title: PropTypes.string,
+    poster_path: PropTypes.string,
+    release_date: PropTypes.string,
+    title: PropTypes.string,
+    vote_average: PropTypes.number
+  })
 }
 
 export default MovieItem;

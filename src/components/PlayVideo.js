@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"
 import React,{useState, useEffect} from "react";
 import ReactDOM from "react-dom";
 import tmdbApi from "../api/tmdbApi";
@@ -60,4 +61,12 @@ function PlayVideo(props){
       )
     : null;
 }         
+
+PlayVideo.propTypes = {
+  category: PropTypes.string.isRequired,
+  close: PropTypes.func,
+  item: PropTypes.shape({
+    id: PropTypes.number
+  }),
+}
 export default PlayVideo;

@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"
 import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router";
 
@@ -99,6 +100,10 @@ function MovieGrid(props) {
       
     </div>
   );
+}
+
+MovieGrid.propTypes = {
+  category: PropTypes.string.isRequired
 }
 
 export default MovieGrid;

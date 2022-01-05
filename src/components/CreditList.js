@@ -1,3 +1,4 @@
+import PropTypes from "prop-types"
 import React, { useState, useEffect } from "react";
 import tmdbApi from "../api/tmdbApi";
 
@@ -106,5 +107,18 @@ function CreditList(props) {
     </div>
   );
 }
+
+CreditList.propTypes = {
+  category: PropTypes.string.isRequired,
+  item: PropTypes.shape({
+    department: PropTypes.string,
+    first_air_date: PropTypes.string,
+    
+    id: PropTypes.number,
+   
+    release_date: PropTypes.string
+  })
+}
+
 
 export default CreditList;
