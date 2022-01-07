@@ -32,7 +32,6 @@ const handleCloseVideo = () => {
         const getSimilarList = async() => {
             const res = await tmdbApi.similar(category,item.id)
             setMovie(res.results)
-            return res
         }
         getSimilarList()
     }, [item.id,category])

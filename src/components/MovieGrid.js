@@ -33,13 +33,11 @@ function MovieGrid(props) {
     const fetchData = async () => {
       const params = {
         with_genres: genreIdUrl
-        // === api co url with_genres
-        // tim id tren params url khi click
+        
       };
       const res = await tmdbApi.getByGenre(category, { params });
       setMovies(res.results);
       setTotalPage(res.total_pages)
-      return res;
     };
     fetchData();
   }, [category, genreIdUrl, history]);

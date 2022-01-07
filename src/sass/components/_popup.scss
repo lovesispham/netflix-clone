@@ -124,6 +124,7 @@
         .popup-close{
             @include center;
             top:-30px;
+            @include circle(40px);
         }
         .video-content{
           padding-top: 80%;

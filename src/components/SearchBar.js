@@ -4,14 +4,19 @@ import {useHistory} from 'react-router-dom'
 import useOutsideClick from './useOutsideClick'
 
 
+  
+
  function SearchBar(props) {
      const history = useHistory()
 
     const [searchToggle, setSearchToggle] = useState(false)
-     const [keyword, setKeyWord] = useState(props.keyword ? props.keyword : '')
+    const [keyword, setKeyWord] = useState(props.keyword ? props.keyword : '')
     const searchbarRef = useRef()
     const searchInputRef = useRef()
+    
+    
 
+    
 
     useOutsideClick(searchbarRef,()=> {
         if(searchToggle){
@@ -34,12 +39,17 @@ import useOutsideClick from './useOutsideClick'
      const handleSearchInput = event => {
         const {value} = event.target
         setKeyWord(value)
-        console.log(value)
+
+       
+
         if(value.length > 0){
             history.push(`/search/${value}`)
         } else
             history.push("/")
+            
+
      }
+     
      
 
     return (

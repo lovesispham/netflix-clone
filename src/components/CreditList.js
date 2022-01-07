@@ -21,7 +21,6 @@ function CreditList(props) {
       setCast(res.cast);
       
       setCrew(res.crew);
-      return res;
     };
     getCredits();
       const getDetail = async () => {
@@ -29,7 +28,6 @@ function CreditList(props) {
 
         setDuration(res.runtime);
 
-        return res;
       };
       getDetail();
     

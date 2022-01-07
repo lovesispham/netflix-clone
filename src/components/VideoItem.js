@@ -20,7 +20,6 @@ function VideoItem(props){
           // "?autoplay=1&mute=1";
   
         setVideo(videSrc);
-        return res;
       };
       setVideoActive();
     }, [item.id, category]);

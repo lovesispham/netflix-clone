@@ -22,7 +22,6 @@ function PlayVideo(props){
        
 
         setVideo(videSrc);
-        return res;
       };
       setVideoActive();
     }, [item.id, category]);

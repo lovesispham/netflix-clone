@@ -55,19 +55,20 @@ function Banner(props) {
     setSelected([]);
   };
 
+  
  
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = async() => {
       const params = {};
-      let res = null;
-      if (category === "movie") {
-        res = await tmdbApi.getMoviesList(props.type, { params });
-      } else res = await tmdbApi.getTvList(props.type, { params });
+    let res = null;
+    if (category === "movie") {
+      res = await tmdbApi.getMoviesList(props.type, { params });
+    } else res = await tmdbApi.getTvList(props.type, { params });
 
-      setMovie(res.results[Math.floor(Math.random() * res.results.length - 1)]);
-      return res;
-    };
+    setMovie(res.results[Math.floor(Math.random() * res.results.length - 1)]);
+    return res;
+    }
     fetchData();
   }, [category, props.type]);
 

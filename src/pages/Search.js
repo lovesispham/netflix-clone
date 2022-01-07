@@ -8,19 +8,10 @@ function Search(props) {
     
       <div className="section-movie-grid">
       <div className="top-heading">
-        {
-          keyword && keyword.length > 0 ? (
-            <h2 className="heading">
+      <h2 className="heading">
           
-            Search results for : {keyword}
-        </h2>
-          ):(
-            <h2 className="heading">
-          
-            Sorry, not found
-        </h2>
-          )
-        }
+          Search results for : {keyword}
+      </h2>
         
         
       </div>

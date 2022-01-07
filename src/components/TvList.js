@@ -28,7 +28,6 @@ import "swiper/css/navigation"; // Navigation module
           const res = await tmdbApi.getTvList(props.type, { params });
           //  console.log(res)
           setMovies(res.results);
-          return res;
         };
         fetchData();
       }, [props.type]);

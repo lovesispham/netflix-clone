@@ -27,7 +27,6 @@ function MovieList(props) {
 
 
   
-
   // render movies item
   useEffect(() => {
     // if [] chay 1 lan, hok chay lai
@@ -36,8 +35,9 @@ function MovieList(props) {
       const params = {};
       const res = await tmdbApi.getMoviesList(props.type, { params });
       //  console.log(res)
+      
       setMovies(res.results);
-      return res;
+      
     };
     fetchData();
   }, [props.type]);
