@@ -1,4 +1,4 @@
-import React,{useState, useEffect,useCallback} from "react";
+import React,{useState, useEffect} from "react";
 import tmdbApi from "../api/tmdbApi";
 import useIsMounted from './useIsMounted'
 
@@ -12,8 +12,8 @@ function PlayVideo(props){
 
     const isMountedRef = useIsMounted();
 
-    const setVideoActive = useCallback(
-      async() => {
+    useEffect(() => {
+      const setVideoActive = async() => {
         const res = await tmdbApi.getVideos(category,item.id);
         const result = res.results
         let videoKey = null
@@ -40,15 +40,10 @@ function PlayVideo(props){
                          if(isMountedRef.current){
                             setVideo(videoSrc);
                          }
-      },
-      [item.id, category, playvideo, isMountedRef],
-    )
-
-    useEffect(() => {
-      
+      }
       setVideoActive();
       
-    }, [item.id, category, playvideo]);
+    }, [item.id, category, playvideo, isMountedRef]);
 
     return (
       <div className="video-content" id={`modal_${item.id}`}>

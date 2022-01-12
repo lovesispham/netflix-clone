@@ -14,35 +14,26 @@ function CreditList(props) {
   const mathDate = item.release_date || item.first_air_date || null
   
   const isMountedRef = useIsMounted();
-  const getCredits = useCallback(
-    async() => {
+
+
+  useEffect(() => {
+   
+    const getCredits = async() => {
       const res = await tmdbApi.credits(category, item.id);
       if(isMountedRef.current){
         setCast(res.cast);
         setCrew(res.crew);
       }
-    },
-    [item.id,category,isMountedRef],
-  )
-
-    const getDetail = useCallback(
-      async() => {
-        const res = await tmdbApi.detail(category, item.id);
+    }
+    const getDetail = async() => {
+      const res = await tmdbApi.detail(category, item.id);
         if(isMountedRef.current){
         setDuration(res.runtime,isMountedRef);
         }
-      },
-      [item.id,category,isMountedRef],
-    )
-
-  useEffect(() => {
-   
-    getCredits();
-      
-      getDetail();
-      
-    
-  }, [item.id,category ]);
+    }  
+    getCredits()
+    getDetail()
+  }, [item.id,category,isMountedRef ]);
 
 
   function crewHandle(){

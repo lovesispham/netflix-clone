@@ -1,5 +1,5 @@
 import PropTypes from "prop-types"
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router";
 import tmdbApi from "../api/tmdbApi";
 import MovieItem from "./MovieItem";

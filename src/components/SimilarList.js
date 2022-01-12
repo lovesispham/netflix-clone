@@ -1,5 +1,5 @@
 import PropTypes from "prop-types"
-import React, {useState, useEffect, useCallback} from 'react'
+import React, {useState, useEffect} from 'react'
 import tmdbApi,{playvideo} from '../api/tmdbApi'
 import ModalForm from "./ModalForm";
 import PlayVideo from "./PlayVideo";
@@ -31,21 +31,17 @@ function SimilarList(props) {
   };
   const isMountedRef = useIsMounted();
 
-  const getSimilarList = useCallback(
-    async() => {
-      const res = await tmdbApi.similar(category,item.id)
+ 
+    useEffect(() => {
+        const getSimilarList = async() => {
+          const res = await tmdbApi.similar(category,item.id)
       if(isMountedRef.current){
       setMovie(res.results)
       }
-
-    },
-    [item.id,category, isMountedRef],
-  )
-    useEffect(() => {
-      
+        }
         getSimilarList()
         
-    }, [item.id,category])
+    }, [item.id,category,isMountedRef])
     
     
     return (

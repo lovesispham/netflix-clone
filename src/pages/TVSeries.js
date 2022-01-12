@@ -5,7 +5,7 @@ import Banner from '../components/Banner'
 import GenresList from "../components/GenresList";
 import { category, tvType } from '../api/tmdbApi';
 
-function Movies(props) {
+function TVSeries(props) {
     return (
         <div className="section-movie-slider">
             <div className="top-heading">
@@ -35,4 +35,4 @@ function Movies(props) {
         </div>
     )
 }
-export default Movies
+export default TVSeries

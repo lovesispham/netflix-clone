@@ -1,5 +1,5 @@
 import PropTypes from "prop-types";
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import tmdbApi,{playvideo} from "../api/tmdbApi";
 import { truncate } from "../untils/untils";
 import ModalForm from "./ModalForm";
@@ -48,28 +48,29 @@ function Banner(props) {
     setSelectedVideo([]);
   };
   const isMountedRef = useIsMounted();
-  const fetchData = useCallback(
-    async() => {
-      const params = {};
-      let res = null;
-      if (category === "movie") {
+
+
+  useEffect(() => {
+      const fetchData = async() => {
+        const params = {};
+        let res = null;
+
+      
+      if(category === 'movie'){
         res = await tmdbApi.getMoviesList(props.type, { params });
-      } else res = await tmdbApi.getTvList(props.type, { params });
+      }
+      res = await tmdbApi.getTvList(props.type, { params });
+      
       if(isMountedRef.current){
         setMovie(res.results[Math.floor(Math.random() * res.results.length - 1)]);
       }
       
       return res;
-    },
-    [category, props.type, isMountedRef],
-  )
-
-  useEffect(() => {
-    
+      }
 
       fetchData();
     
-  }, [category, props.type]);
+  }, [category, props.type,isMountedRef]);
 
   
 

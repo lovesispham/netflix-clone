@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router";
 
 import tmdbApi, { category } from "../api/tmdbApi";
@@ -37,7 +37,7 @@ function SearchList(props) {
     }
 
     fetchData()
-  }, [keyword])
+  }, [keyword, isMountedRef])
   
 
    const handleLoadMore = async () => {

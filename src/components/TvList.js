@@ -1,5 +1,5 @@
 import PropTypes from "prop-types"
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 
 // import Swiper core and required modules
 import { Navigation } from "swiper";
@@ -35,7 +35,7 @@ import "swiper/css/navigation"; // Navigation module
               }
         }
         
-          
+
           fetchData();
        
       
