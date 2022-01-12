@@ -59,7 +59,10 @@ function Banner(props) {
       if(category === 'movie'){
         res = await tmdbApi.getMoviesList(props.type, { params });
       }
-      res = await tmdbApi.getTvList(props.type, { params });
+      else{
+        res = await tmdbApi.getTvList(props.type, { params });
+      }
+      
       
       if(isMountedRef.current){
         setMovie(res.results[Math.floor(Math.random() * res.results.length - 1)]);
