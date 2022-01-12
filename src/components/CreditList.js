@@ -1,38 +1,48 @@
 import PropTypes from "prop-types"
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import tmdbApi from "../api/tmdbApi";
+import useGenreConvert from './useGenreConvert'
+import useIsMounted from './useIsMounted'
 
 function CreditList(props) {
   const [cast, setCast] = useState([]);
   const [crew, setCrew] = useState([]);
   const [duration, setDuration] = useState([]);
-
-  const item = props.item;
-  const category = props.category;
-  const gender_ids = props.gender_ids;
+  const { item, category, gen} = props
+  const genresConvert = useGenreConvert(gen);
   //movie:release_date || tv show: first_air_date
   const mathDate = item.release_date || item.first_air_date || null
   
-  
+  const isMountedRef = useIsMounted();
+  const getCredits = useCallback(
+    async() => {
+      const res = await tmdbApi.credits(category, item.id);
+      if(isMountedRef.current){
+        setCast(res.cast);
+        setCrew(res.crew);
+      }
+    },
+    [item.id,category,isMountedRef],
+  )
+
+    const getDetail = useCallback(
+      async() => {
+        const res = await tmdbApi.detail(category, item.id);
+        if(isMountedRef.current){
+        setDuration(res.runtime,isMountedRef);
+        }
+      },
+      [item.id,category,isMountedRef],
+    )
 
   useEffect(() => {
-    const getCredits = async () => {
-      const res = await tmdbApi.credits(category, item.id);
-      setCast(res.cast);
-      
-      setCrew(res.crew);
-    };
+   
     getCredits();
-      const getDetail = async () => {
-        const res = await tmdbApi.detail(category, item.id);
-
-        setDuration(res.runtime);
-
-      };
+      
       getDetail();
+      
     
-    
-  }, [item.id,category]);
+  }, [item.id,category ]);
 
 
   function crewHandle(){
@@ -42,7 +52,7 @@ function CreditList(props) {
     return [...map.values()]
   }
   
-  var newCrewList = crewHandle()
+  const newCrewList = crewHandle()
   
   // Duration: convert hour and minutes format h:m
   function convertDuration(result) {
@@ -82,10 +92,12 @@ function CreditList(props) {
 
       <div className="cast-item genres-list">
         <span className="text">Genres: </span>
-
-        {item.genre_ids?.map((id, index) => (
-          <span key={index}>{(index ? ", " : "") + gender_ids[id]}</span>
-        ))}
+            {
+              genresConvert && genresConvert.map((gen,index) => (
+                <span key={index}>{(index ? ", " : "") + gen}</span>
+              ))
+            }
+        
       </div>
       <div className="cast-item">
         <span className="text">Release Date: </span>

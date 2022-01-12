@@ -1,81 +1,80 @@
-import PropTypes from "prop-types"
-import React, { useState, useEffect } from "react";
-import tmdbApi from "../api/tmdbApi";
+import PropTypes from "prop-types";
+import React, { useState, useEffect, useCallback } from "react";
+import tmdbApi,{playvideo} from "../api/tmdbApi";
 import { truncate } from "../untils/untils";
-import Modal from "./Modal";
-import genres from "../assets/data/genres";
-import genrestv from "../assets/data/genrestv";
+import ModalForm from "./ModalForm";
+import ModalDetail from "./ModalDetail";
 import PlayVideo from "./PlayVideo";
+import useIsMounted from './useIsMounted'
 
 const baseImgUrl = `https://image.tmdb.org/t/p/original/`;
 
 function Banner(props) {
   const category = props.category;
   const [movie, setMovie] = useState([]);
-
-
-  //   genres
-  var gender_ids = [];
-  if (category === "movie") {
-    genres.map(el => (gender_ids[el.id] = el.name));
-  } else genrestv.map(el => (gender_ids[el.id] = el.name));
+  const genre_ids = movie?.genre_ids
 
   const matchTitle =
     movie?.original_title ||
     movie?.title ||
     movie?.name ||
     movie?.original_name;
-    // Video frame
-    const [selectedVideo, setSelectedVideo] = useState([])
-    const [isShowingVideo, setIsShowingVideo] = useState(false)
 
-    const handlePlayVideo = movie => {
-    setSelectedVideo(movie)
-    setIsShowingVideo(true)
-  }
-  const handleCloseVideo = () => {
-      setIsShowingVideo(false)
-      setSelectedVideo([])
-  }
-  //   Modal
+  //   Modal Detail
   const [selected, setSelected] = useState([]);
-  const [isShowing, setisShowing] = useState(false);
-  
+  const [openModal, setOpenModal] = useState(false);
 
-  
-  
-
-  const handleOpen = movie => {
+  const handleOpenDetail = movie => {
     setSelected(movie);
-    setisShowing(true);
+    setOpenModal(true);
   };
 
   const handleClose = () => {
-    setisShowing(false);
+    setOpenModal(false);
     setSelected([]);
   };
 
-  
- 
+  // Modal Video
+
+  const [selectedVideo, setSelectedVideo] = useState([]);
+  const [isShowingVideo, setIsShowingVideo] = useState(false);
+
+  const handlePlayVideo = movie => {
+    setSelectedVideo(movie);
+    setIsShowingVideo(true);
+  };
+  const handleCloseVideo = () => {
+    setIsShowingVideo(false);
+    setSelectedVideo([]);
+  };
+  const isMountedRef = useIsMounted();
+  const fetchData = useCallback(
+    async() => {
+      const params = {};
+      let res = null;
+      if (category === "movie") {
+        res = await tmdbApi.getMoviesList(props.type, { params });
+      } else res = await tmdbApi.getTvList(props.type, { params });
+      if(isMountedRef.current){
+        setMovie(res.results[Math.floor(Math.random() * res.results.length - 1)]);
+      }
+      
+      return res;
+    },
+    [category, props.type, isMountedRef],
+  )
 
   useEffect(() => {
-    const fetchData = async() => {
-      const params = {};
-    let res = null;
-    if (category === "movie") {
-      res = await tmdbApi.getMoviesList(props.type, { params });
-    } else res = await tmdbApi.getTvList(props.type, { params });
+    
 
-    setMovie(res.results[Math.floor(Math.random() * res.results.length - 1)]);
-    return res;
-    }
-    fetchData();
+      fetchData();
+    
   }, [category, props.type]);
 
+  
 
-  return (
-    movie ? (
-      <div
+  return movie ? (
+    <div
       className="section-banner"
       style={{
         backgroundImage: `url(${baseImgUrl}${
@@ -83,48 +82,59 @@ function Banner(props) {
         })`
       }}
     >
-   
-           
-       
-    
       <div className="banner-content">
         {/* original_title, title : movie ;original_name, name: tvseries  */}
+        
         <h3 className="title">{matchTitle}</h3>
         <div className="desc">{truncate(movie?.overview, 150)}</div>
         <div className="btn-group">
-          <span className="btn btn-play" onClick={()=>handlePlayVideo(movie)}>
-            
+          <span className="btn btn-play" onClick={() => handlePlayVideo(movie)}>
             <i className="fa fa-play"></i> Play
           </span>
-          <span className="btn btn-info" onClick={() => handleOpen(movie)}>
-            
+          <span
+            className="btn btn-info"
+            onClick={() => handleOpenDetail(movie)}
+          >
             <i className="fa fa-info"></i> More Info
           </span>
         </div>
       </div>
-      
-      <Modal 
-        isShowing={isShowing} 
-        close={handleClose} 
-        movie={selected} 
-        category={category} 
-        gender_ids={gender_ids} 
-        title ={matchTitle}
-        
-        />
-        {
-          isShowingVideo ? (
-            <PlayVideo 
-            close = {handleCloseVideo}
-            show={isShowingVideo}
-            item={selectedVideo}
-            category={category}/>
-          ): null
-        }
-         
+
+      {/* showing video*/}
+      {isShowingVideo ? (
+        <ModalForm show={isShowingVideo} setShowModal={setIsShowingVideo}>
+          <div className="popup-container pu-video">
+            <span className="popup-close" onClick={handleCloseVideo}>
+              <i className="fa fa-close"></i>
+            </span>
+            <PlayVideo item={selectedVideo} category={category} playvideo={playvideo.autoplay} />
+          </div>
+        </ModalForm>
+      ) : null}
+
+      {/* showing modal detail */}
+
+      {openModal ? (
+        <ModalForm show={openModal} setShowModal={setOpenModal}>
+          <div className="popup-container pu-review">
+            <span className="popup-close" onClick={handleClose}>
+              <i className="fa fa-close"></i>
+            </span>
+            <ModalDetail
+              movie={selected}
+              category={category}
+              title={matchTitle}
+              playvideo={playvideo.mute}
+              gen={genre_ids}
+            />
+          </div>
+        </ModalForm>
+      ) : null}
     </div>
-    ) : <div className="section-banner"
-               style={{
+  ) : (
+    <div
+      className="section-banner"
+      style={{
         backgroundImage: `url(https://images.unsplash.com/photo-1621955964441-c173e01c135b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTB8fG5ldGZsaXh8ZW58MHx8MHx8&auto=format&fit=crop&w=2000&q=60)`
       }}
     ></div>
@@ -134,13 +144,12 @@ function Banner(props) {
 Banner.propTypes = {
   category: PropTypes.string.isRequired,
   type: PropTypes.string.isRequired,
-  matchTitle:PropTypes.string,
+  matchTitle: PropTypes.string,
+  
   handlePlayVideo: PropTypes.func,
-  handleCloseVideo:PropTypes.func,
-  handleOpen:PropTypes.func,
-  handleClose:PropTypes.func
-
-
-}
+  handleCloseVideo: PropTypes.func,
+  handleOpen: PropTypes.func,
+  handleClose: PropTypes.func
+};
 
 export default Banner;

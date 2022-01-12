@@ -6,10 +6,20 @@
 
   display: flex;
   align-items: center;
+  @include transition2;
   &.header-fixed{
     position: fixed;
     top:0;
     left:0;
+    animation: smoothScroll .3s forwards;
+  }
+  @keyframes smoothScroll {
+    0% {
+      transform: translateY(-40px);
+    }
+    100% {
+      transform: translateY(0px);
+    }
   }
   @media (min-width: $screen-sm) {
     padding: 0 20px;

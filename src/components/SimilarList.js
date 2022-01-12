@@ -1,9 +1,13 @@
 import PropTypes from "prop-types"
-import React, {useState, useEffect} from 'react'
-import tmdbApi from '../api/tmdbApi'
+import React, {useState, useEffect, useCallback} from 'react'
+import tmdbApi,{playvideo} from '../api/tmdbApi'
+import ModalForm from "./ModalForm";
 import PlayVideo from "./PlayVideo";
-import {dateToYearOnly} from '../untils/untils'
+import {dateToYearOnly} from '../untils/untils';
+import useIsMounted from './useIsMounted'
+
 const baseImgUrl = `https://image.tmdb.org/t/p/w500/`;
+
 function SimilarList(props) {
 
     const [movie, setMovie] = useState([])
@@ -12,43 +16,53 @@ function SimilarList(props) {
 
     const item = props.item
     const category = props.category
+  // Modal Video
 
-      // Video frame
-  const [selectedVideo, setSelectedVideo] = useState([])
-  const [isShowingVideo, setIsShowingVideo] = useState(false)
+  const [selectedVideo, setSelectedVideo] = useState([]);
+  const [isShowingVideo, setIsShowingVideo] = useState(false);
 
-  const handlePlayVideo = id => {
-  setSelectedVideo(id)
-  setIsShowingVideo(true)
-  
-}
-const handleCloseVideo = () => {
-    setIsShowingVideo(false)
+  const handlePlayVideo = movie => {
+    setSelectedVideo(movie);
+    setIsShowingVideo(true);
+  };
+  const handleCloseVideo = () => {
+    setIsShowingVideo(false);
     setSelectedVideo([]);
-}
+  };
+  const isMountedRef = useIsMounted();
 
+  const getSimilarList = useCallback(
+    async() => {
+      const res = await tmdbApi.similar(category,item.id)
+      if(isMountedRef.current){
+      setMovie(res.results)
+      }
 
+    },
+    [item.id,category, isMountedRef],
+  )
     useEffect(() => {
-        const getSimilarList = async() => {
-            const res = await tmdbApi.similar(category,item.id)
-            setMovie(res.results)
-        }
+      
         getSimilarList()
+        
     }, [item.id,category])
     
     
     return (
         <div className="similar-listing">
             <h2 className="heading">More Like This</h2>
-            {
-          isShowingVideo ? (
-    <PlayVideo 
-            close = {handleCloseVideo}
-            show={isShowingVideo}
-            item={selectedVideo} 
-            category={category}/>
-          ):null
-          }
+           {/* showing video*/}
+      {isShowingVideo ? (
+        <ModalForm show={isShowingVideo} setShowModal={setIsShowingVideo}>
+          <div className="popup-container pu-video">
+            <span className="popup-close" onClick={handleCloseVideo}>
+              <i className="fa fa-close"></i>
+            </span>
+            <PlayVideo item={selectedVideo} category={category}  playvideo={playvideo.autoplay}/>
+          </div>
+        </ModalForm>
+      ) : null}
+
             <div className="row">
                 {
                     movie.slice(0,numberofItem).map((item,index)=> (

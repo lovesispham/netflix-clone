@@ -17,6 +17,10 @@ const mainMenu = [
   {
     display: "Tv Show",
     path: "/tv"
+  },
+  {
+    display: "My Listing",
+    path: "/mylist"
   }
 ];
 

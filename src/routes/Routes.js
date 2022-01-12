@@ -7,6 +7,7 @@ import Catalog from '../pages/Catalog'
 import Movies from '../pages/Movies'
 import TVSeries from '../pages/TVSeries'
 import Search from '../pages/Search'
+import MyList from '../pages/MyList'
 const Routes = () => {
     const location = useLocation()
     return (
@@ -41,6 +42,11 @@ const Routes = () => {
                 path='/search/:keyword'
                 exact
                 component={Search}
+            />
+            <Route 
+                path='/mylist'
+                exact
+                component={MyList}
             />
             <Route path="*">
                 <Redirect to="/" />

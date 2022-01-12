@@ -7,11 +7,9 @@ import { Navigation } from "swiper";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import tmdbApi from "../api/tmdbApi";
-
-
-import genres from "../assets/data/genres";
-
 import MovieItem from "./MovieItem";
+import useIsMounted from './useIsMounted'
+
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/navigation"; // Navigation module
@@ -19,28 +17,33 @@ import "swiper/css/navigation"; // Navigation module
 
 function MovieList(props) {
   const [movies, setMovies] = useState([]);
+  
   const category = props.category
-  var gender_ids = [];
-  genres.map(el => (gender_ids[el.id] = el.name));
-  
+  const isMountedRef = useIsMounted();
+ 
   
 
 
   
-  // render movies item
-  useEffect(() => {
-    // if [] chay 1 lan, hok chay lai
+
+    // render movies item
+    useEffect(() => {
+      // if [] chay 1 lan, hok chay lai
     
-    const fetchData = async () => {
-      const params = {};
-      const res = await tmdbApi.getMoviesList(props.type, { params });
-      //  console.log(res)
+
+      const fetchData = async() => {
+        const params = {};
+        const res = await tmdbApi.getMoviesList(props.type, { params });
+            if(isMountedRef.current){
+              setMovies(res.results);
+            }
+      }
       
-      setMovies(res.results);
       
-    };
-    fetchData();
-  }, [props.type]);
+        fetchData();
+      
+    
+    }, [props.type, isMountedRef]);
 
 
   return (
@@ -60,7 +63,6 @@ function MovieList(props) {
           <SwiperSlide className="slider-item" key={index}>
             <MovieItem
               item={item}
-              gender_ids={gender_ids}
               category={category}
             />
           </SwiperSlide>

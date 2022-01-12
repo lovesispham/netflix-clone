@@ -1,5 +1,5 @@
 import PropTypes from "prop-types"
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 
 // import Swiper core and required modules
 import { Navigation } from "swiper";
@@ -9,7 +9,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import tmdbApi from "../api/tmdbApi";
 
 import TvItem from "./TvItem";
-import genrestv from "../assets/data/genrestv";
+import useIsMounted from './useIsMounted'
 
 // Import Swiper styles
 import "swiper/css";
@@ -20,26 +20,28 @@ import "swiper/css/navigation"; // Navigation module
  function TvList(props) {
     const [movies, setMovies] = useState([]);
     // render tv listing
+    const isMountedRef = useIsMounted();
+    
+
     useEffect(() => {
         // if [] chay 1 lan, hok chay lai
-        
-        const fetchData = async () => {
+      
+
+        const fetchData = async() => {
           const params = {};
           const res = await tmdbApi.getTvList(props.type, { params });
-          //  console.log(res)
-          setMovies(res.results);
-        };
-        fetchData();
-      }, [props.type]);
-    
-      
-    //   genres
-      var gender_ids = [];
-        genrestv.map(el => (gender_ids[el.id] = el.name));
-
+              if(isMountedRef.current){
+                setMovies(res.results);
+              }
+        }
         
-
-
+          
+          fetchData();
+       
+      
+      }, [props.type, isMountedRef]);
+    
+  
     return (
         <div className="movie-slider">
       <Swiper
@@ -57,7 +59,6 @@ import "swiper/css/navigation"; // Navigation module
           <SwiperSlide className="slider-item" key={index}>
             <TvItem
               item={item}
-              gender_ids={gender_ids}
               category={props.category}
             />
           </SwiperSlide>

@@ -1,15 +1,13 @@
 import PropTypes from "prop-types"
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useHistory, useParams } from "react-router";
-
 import tmdbApi from "../api/tmdbApi";
-
-import genres from "../assets/data/genres";
-import genrestv from "../assets/data/genrestv";
 import MovieItem from "./MovieItem";
 import TvItem from "./TvItem";
 import Spinner from "./Spinner";
 import useLazyLoad from "./useLazyLoad";
+import useIsMounted from './useIsMounted'
+
 
 function MovieGrid(props) {
   const [movies, setMovies] = useState([]);
@@ -17,30 +15,34 @@ function MovieGrid(props) {
   const [totalPage, setTotalPage] = useState(0)
   const history = useHistory();
   const { genreIdUrl } = useParams();
-  
+  const isMountedRef = useIsMounted();
 
   const category = props.category;
 
-  var gender_ids = [];
-  if (category === "movie") {
-    genres.map(el => (gender_ids[el.id] = el.name));
-  } else genrestv.map(el => (gender_ids[el.id] = el.name));
-
+  
   //render movies item
   useEffect(() => {
     //if [] chay 1 lan, hok chay lai
-
-    const fetchData = async () => {
-      const params = {
-        with_genres: genreIdUrl
-        
-      };
-      const res = await tmdbApi.getByGenre(category, { params });
-      setMovies(res.results);
-      setTotalPage(res.total_pages)
+        const fetchData = async() => {
+            const params = {
+      with_genres: genreIdUrl
+      
     };
-    fetchData();
-  }, [category, genreIdUrl, history]);
+    const res = await tmdbApi.getByGenre(category, { params });
+    if(isMountedRef.current){
+      setMovies(res.results);
+        setTotalPage(res.total_pages)
+    }
+        }
+   
+     
+        fetchData();
+        
+  
+      
+    
+    
+  }, [category, genreIdUrl, history, isMountedRef]);
 
   // console.log("render", movies);
   
@@ -69,7 +71,6 @@ function MovieGrid(props) {
               <div className="slider-item" key={index}>
                 <MovieItem
                   item={item}
-                  gender_ids={gender_ids}
                   category={category}
                 />
               </div>
@@ -78,7 +79,6 @@ function MovieGrid(props) {
               <div className="slider-item" key={index}>
                 <TvItem
                   item={item}
-                  gender_ids={gender_ids}
                   category={category}
                 />
               </div>

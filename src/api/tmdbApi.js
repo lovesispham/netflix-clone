@@ -1,5 +1,10 @@
 import axiosClient from './axiosClient'
 
+export const playvideo = {
+    autoplay:'autoplay',
+    mute:'mute'
+}
+
 export const category = {
     movie:'movie',
     tv:'tv'
